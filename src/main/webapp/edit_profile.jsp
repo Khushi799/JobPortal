@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,4 +45,33 @@
 							<div class="form-group mb-3">
 								<label>Email</label>
 								<input type="email" placeholder="Email" required class="form-control"
-									name="em
+									name="email" value="${userobj.email}">
+							</div>
+
+							<div class="form-group mb-3">
+								<label>Phone</label>
+								<input type="text" placeholder="Phone Number" required class="form-control"
+									name="phone" value="${userobj.phone}">
+							</div>
+
+							<div class="form-group mb-3">
+								<label>Password</label>
+								<input type="password" placeholder="Password" class="form-control"
+									name="password">
+								<small class="text-light">Leave blank if you don’t want to change the password</small>
+							</div>
+
+							<div class="text-center mt-4">
+								<button type="submit" class="btn btn-primary">Update Profile</button>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%@include file="all_component/footer.jsp"%>
+</body>
+</html>
