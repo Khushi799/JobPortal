@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="com.entity.Jobs"%>
-<%@page import="com.DB.DBConnect"%>
-<%@page import="com.dao.JobDAO"%>
+<%@page import="master.dto.Jobs"%>
+<%@page import="master.utilities.ConnectionFactory"%>
+<%@page import="master.dao.JobDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
@@ -81,7 +81,7 @@
 
                 <!-- Job Cards -->
                 <%
-                    JobDAO dao = new JobDAO(DBConnect.getconn());
+                    JobDAO dao = new JobDAO(ConnectionFactory.getConnection());
                     List<Jobs> list = dao.getAllJobs();
                     for (Jobs j : list) {
                 %>
@@ -95,10 +95,12 @@
 
                         <p>
                         <%
-                            if (j.getDescription().length() > 0 && j.getDescription().length() < 120) {
-                                out.print(j.getDescription());
-                            } else {
-                                out.print(j.getDescription().substring(0, 120) + "...");
+                            if (j.getDescription() != null && j.getDescription().length() > 0) {
+                                if (j.getDescription().length() < 120) {
+                                    out.print(j.getDescription());
+                                } else {
+                                    out.print(j.getDescription().substring(0, 120) + "...");
+                                }
                             }
                         %>
                         </p>
@@ -114,7 +116,7 @@
                             </div>
                         </div>
 
-                        <h6 class="mt-2">Publish Date: <%= j.getPdate().toString() %></h6>
+                        <h6 class="mt-2">Publish Date: <%= j.getPdate() %></h6>
 
                         <div class="text-center mt-3">
                             <a href="one_view.jsp?id=<%= j.getId() %>" 
