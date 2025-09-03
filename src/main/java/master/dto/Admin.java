@@ -9,12 +9,12 @@ public class Admin {
 
     public Admin() { super(); }
 
-    public Admin(int id, String companyName, String email, String password, String description) {
+    public Admin(int id, String companyName, String email, String password) {
         this.id = id;
         this.companyName = companyName;
         this.email = email;
         this.password = password;
-        this.description = description;
+        
     }
 
     public Admin(String companyName, String email, String password, String description) {

@@ -27,3 +27,4 @@ public class SearchJobServlet extends HttpServlet {
         rd.forward(request, response);
     }
 }
+

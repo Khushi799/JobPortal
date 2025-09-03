@@ -6,7 +6,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 import master.dao.UserDao;
+import master.dao.AdminDao;
 import master.dto.User;
+import master.dto.Admin;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -16,20 +18,28 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UserDao dao = new UserDao();
-        User user = dao.login(email, password);
+        HttpSession session = request.getSession();
+
+        // Try Admin login first
+        AdminDao adminDao = new AdminDao();
+        Admin admin = adminDao.login(email, password);
+
+        if (admin != null) {
+            session.setAttribute("admin", admin);
+            session.setAttribute("adminId", admin.getId());
+            response.sendRedirect("adminDashboard"); // ✅ servlet URL, not JSP
+            return;
+        }
+
+        // Otherwise, try User login
+        UserDao userDao = new UserDao();
+        User user = userDao.login(email, password);
 
         if (user != null) {
-            HttpSession session = request.getSession();
             session.setAttribute("user", user);
-
-            if ("admin".equals(user.getRole())) {
-                response.sendRedirect("adminDashboard.jsp");
-            } else {
-                response.sendRedirect("seekerDashboard.jsp");
-            }
-        } else {
-            response.getWriter().println("Invalid login credentials!");
+            session.setAttribute("userId", user.getId());
+            response.sendRedirect("userDashboard.jsp"); // if you have a servlet for user dashboard
         }
-    }
+
+}
 }

@@ -9,38 +9,11 @@ import java.util.List;
 public class ApplicationDAO {
 
     // 1. Get all applications for a specific job
-    public List<Application> getApplicationsByJob(int jobId) {
-        List<Application> list = new ArrayList<>();
-        String sql = "SELECT * FROM applications WHERE job_id=?";
-
-        try (Connection conn = ConnectionFactory.getConn();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, jobId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Application app = new Application(
-                        rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getInt("job_id"),
-                        rs.getTimestamp("applied_on"),
-                        rs.getString("status")
-                    );
-                    list.add(app);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
+    
 
     // 2. Add a new application
     public boolean addApplication(Application app) {
-        String sql = "INSERT INTO applications (user_id, job_id, applied_on, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO application (user_id, job_id, applied_on, status) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConn();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -61,7 +34,7 @@ public class ApplicationDAO {
 
     // 3. Update application status
     public boolean updateApplicationStatus(int applicationId, String status) {
-        String sql = "UPDATE applications SET status=? WHERE id=?";
+        String sql = "UPDATE application SET status=? WHERE id=?";
 
         try (Connection conn = ConnectionFactory.getConn();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -80,7 +53,7 @@ public class ApplicationDAO {
 
     // 4. Optional: Get application by ID
     public Application getApplicationById(int id) {
-        String sql = "SELECT * FROM applications WHERE id=?";
+        String sql = "SELECT * FROM application WHERE id=?";
         try (Connection conn = ConnectionFactory.getConn();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -106,22 +79,53 @@ public class ApplicationDAO {
  // 5. Get all applications for a specific user
     public List<Application> getApplicationsByUser(int userId) {
         List<Application> list = new ArrayList<>();
-        String sql = "SELECT * FROM applications WHERE user_id=?";
+        String sql = "SELECT a.id, a.user_id, a.job_id, a.status, j.title AS job_title " +
+                     "FROM application a " +
+                     "JOIN job j ON a.job_id = j.id " +
+                     "WHERE a.user_id = ?";
+        try (Connection conn = ConnectionFactory.getConn();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Application app = new Application();
+                    app.setId(rs.getInt("id"));
+                    app.setUserId(rs.getInt("user_id"));
+                    app.setJobId(rs.getInt("job_id"));
+                    app.setStatus(rs.getString("status"));
+                    app.setJobTitle(rs.getString("job_title")); // new field in DTO
+                    list.add(app);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+ // Get all applications for a specific job
+    public List<Application> getApplicationsByJob(int jobId) {
+        List<Application> list = new ArrayList<>();
+        String sql = "SELECT a.id, a.user_id, a.job_id, a.status, j.title AS job_title, u.name AS user_name " +
+                     "FROM application a " +
+                     "JOIN job j ON a.job_id = j.id " +
+                     "JOIN user u ON a.user_id = u.id " +
+                     "WHERE a.job_id = ?";
 
         try (Connection conn = ConnectionFactory.getConn();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, userId);
+            ps.setInt(1, jobId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Application app = new Application(
-                        rs.getInt("id"),
-                        rs.getInt("user_id"),
-                        rs.getInt("job_id"),
-                        rs.getTimestamp("applied_on"),
-                        rs.getString("status")
-                    );
+                    Application app = new Application();
+                    app.setId(rs.getInt("id"));
+                    app.setUserId(rs.getInt("user_id"));
+                    app.setJobId(rs.getInt("job_id"));
+                    app.setStatus(rs.getString("status"));
+                    app.setJobTitle(rs.getString("job_title")); // dynamically fetched
+                    app.setUserName(rs.getString("user_name")); // dynamically fetched
                     list.add(app);
                 }
             }
@@ -129,9 +133,9 @@ public class ApplicationDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
-    
+
+
 
 }

@@ -17,24 +17,41 @@ import master.dto.Application;
 public class AdminDashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Connection cn = ConnectionFactory.getConn();
 
-        JobDAO jobDAO = new JobDAO(cn);
-        ApplicationDAO appDAO = new ApplicationDAO();
-
-        List<Job> jobs = jobDAO.getAllJobs();
-
-        List<Application> allApplications = new ArrayList<>();
-        for (Job job : jobs) {
-            List<Application> apps = appDAO.getApplicationsByJob(job.getId());
-            allApplications.addAll(apps);
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("adminId") == null) {
+            response.sendRedirect("login.jsp");
+            return;
         }
 
-        request.setAttribute("jobs", jobs);
-        request.setAttribute("applications", allApplications);
+        int adminId = (Integer) session.getAttribute("adminId");
+        //System.out.println("Admin ID in session: " + adminId);
 
-        RequestDispatcher rd = request.getRequestDispatcher("adminDashboard.jsp");
-        rd.forward(request, response);
+        
+
+
+        try (Connection cn = ConnectionFactory.getConn()) {
+            // Fetch jobs posted by this admin
+            
+        	JobDAO jobDAO = new JobDAO(cn);
+        	List<Job> jobs = jobDAO.getCompanyJobs(adminId); // instance call
+
+        	ApplicationDAO appDAO = new ApplicationDAO();
+        	List<Application> allApplications = new ArrayList<>();
+        	for (Job job : jobs) {
+        	    allApplications.addAll(appDAO.getApplicationsByJob(job.getId())); // now fetches job title dynamically
+        	}
+
+        	request.setAttribute("jobs", jobs);
+        	request.setAttribute("applications", allApplications);
+        	RequestDispatcher rd = request.getRequestDispatcher("adminDashboard.jsp");
+        	rd.forward(request, response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.getWriter().println("Error loading admin dashboard!");
+        }
     }
 }
+
 

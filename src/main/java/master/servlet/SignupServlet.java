@@ -6,6 +6,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 import master.dao.UserDao;
+import master.dao.AdminDao;
 import master.dto.User;
 
 @WebServlet("/SignupServlet")
@@ -13,21 +14,35 @@ public class SignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        String name = request.getParameter("name");
+        String role = request.getParameter("role");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String qualification = request.getParameter("qualification");
-        String role = request.getParameter("role");
 
         User user = new User();
-        user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        user.setQualification(qualification);
         user.setRole(role);
 
-        UserDao dao = new UserDao();
-        boolean status = dao.registerUser(user);
+        boolean status = false;
+
+        if ("admin".equalsIgnoreCase(role)) {
+            // Admin has only name, email, password
+            String adminName = request.getParameter("name");
+            user.setName(adminName);
+
+            AdminDao adminDao = new AdminDao();
+            status = adminDao.registerAdmin(user);
+
+        } else if ("user".equalsIgnoreCase(role) || "seeker".equalsIgnoreCase(role)) {
+            // User/Seeker has name, email, password, qualification
+            String name = request.getParameter("name");
+            String qualification = request.getParameter("qualification");
+            user.setName(name);
+            user.setQualification(qualification);
+
+            UserDao userDao = new UserDao();
+            status = userDao.registerUser(user);
+        }
 
         if (status) {
             response.sendRedirect("login.jsp");

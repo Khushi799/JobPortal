@@ -3,11 +3,47 @@ package master.dao;
 import java.sql.*;
 import master.dto.Admin;
 import master.dto.Job;
+import master.dto.User;
 import master.utilities.ConnectionFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDao {
+	
+
+	    public boolean registerAdmin(User user) {
+	        boolean status = false;
+	        Connection con = null;
+	        PreparedStatement ps = null;
+
+	        try {
+	            con = ConnectionFactory.getConn();
+	            String sql = "INSERT INTO admin (company_name, email, password) VALUES (?, ?, ?)";
+	            ps = con.prepareStatement(sql);
+
+	            ps.setString(1, user.getName());
+	            ps.setString(2, user.getEmail());
+	            ps.setString(3, user.getPassword());
+	            
+
+	            int rows = ps.executeUpdate();
+	            if (rows > 0) {
+	                status = true;
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            try { if (ps != null) ps.close(); } catch (Exception e) {}
+	            try { if (con != null) con.close(); } catch (Exception e) {}
+	        }
+
+	        return status;
+	    }
+	    
+
+	
+	
 
     public Admin login(String email, String password) {
         try {
@@ -22,8 +58,8 @@ public class AdminDao {
                     rs.getInt("id"),
                     rs.getString("company_name"),
                     rs.getString("email"),
-                    rs.getString("password"),
-                    rs.getString("description")
+                    rs.getString("password")
+                    
                 );
             }
         } catch(SQLException e) { e.printStackTrace(); }
@@ -44,27 +80,5 @@ public class AdminDao {
         } catch(SQLException e) { e.printStackTrace(); return false; }
     }
 
-    public List<master.dto.Job> getCompanyJobs(int adminId) {
-        List<master.dto.Job> jobs = new ArrayList<>();
-        try {
-            Connection conn = ConnectionFactory.getConn();
-            String sql = "SELECT * FROM jobs WHERE company_id=? ORDER BY posted_on DESC";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, adminId);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                Job job = new Job(
-                    rs.getInt("id"),
-                    rs.getString("title"),
-                    rs.getString("description"),
-                    rs.getInt("company_id"),
-                    rs.getString("location"),
-                    rs.getString("salary"),
-                    rs.getTimestamp("posted_on")
-                );
-                jobs.add(job);
-            }
-        } catch(SQLException e) { e.printStackTrace(); }
-        return jobs;
-    }
+    
 }

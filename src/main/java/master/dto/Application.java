@@ -6,8 +6,11 @@ public class Application {
     private int id;
     private int userId;
     private int jobId;
+    private String jobTitle;
     private Timestamp appliedOn;
     private String status;
+      // fetched from job table
+    private String userName; 
 
     // No-argument constructor
     public Application() { }
@@ -44,5 +47,9 @@ public class Application {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     
-   
+    public String getJobTitle() { return jobTitle; }
+    public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle; }
+    
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 }
