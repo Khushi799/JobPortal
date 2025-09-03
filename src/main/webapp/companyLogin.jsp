@@ -1,31 +1,24 @@
-<%@page import="com.classes.Admin"%>
-<%@page import="com.classes.company"%>
-<%@page import="com.classes.seeker"%>
-<%@page import="com.classes.MD5"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home</title>
+        <title>Login</title>
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">	
         <script src="https://kit.fontawesome.com/0008de2df6.js" crossorigin="anonymous"></script>
     </head>
     <body>
-
-
         <header id="header">
 
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
 
                     <a class="navbar-brand" href="index.jsp">
-                      
+                        <!-- <img src="images/trendhireLogo.png" class="w-100 main-logo" alt="Logo" title="Logo">-->
                         <img src="images/trendhireLogo.png" class="main-logo" alt="Logo" title="Logo" style="max-width: 150px; max-height: 100px;">
 
                     </a>
-
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav navbar-center m-auto">
@@ -38,106 +31,94 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="aboutUs.jsp">About Us</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="contact.jsp">Contact</a>
                             </li>
-
-
                         </ul>
 
                         <ul class="navbar-nav navbar-right">
 
-                            <%
-                                Admin admin = (Admin) session.getAttribute("admin");
-                                seeker seeker = (seeker) session.getAttribute("seeker");
-                                company company = (company) session.getAttribute("company");
-                                if (seeker != null) {
-                                  
-                            %>
-                            <ul class="navbar-nav navbar-right">
-
-                                <li><a class="btn btn-danger" href="userprofile.jsp">Profile</a></li>
-                            </ul>
-                            <%
-                            } else if (company != null) {
-                            %>
-
-                            <ul class="navbar-nav navbar-right">
-
-                                <li><a class="btn btn-danger" href="companyProfile.jsp">Profile</a></li>
-                            </ul>
-                            <%} else if (admin != null) { %>
-
-
-                            <ul class="navbar-nav navbar-right">
-
-                                <li><a class="btn btn-danger" href="adminProfile.jsp">Profile</a></li>
-                            </ul>
-
-                            <%} else { %>
-                            <ul class="navbar-nav navbar-right">
-
-                                <li><a class="btn btn-danger" href="seekerLogin.jsp">Login</a></li>
-                            </ul>
-
-                            <% }
-                            %>
+                            <li><a class="btn btn-danger" href="CompanyRegister.jsp">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
 
-
         <div class="container-fluid">
             <div class="row" >
                 <div class="d-flex w-100 justify-content-center align-items-center">
-                    <img class="w-90" src="images/trendhireLogo.png" alt="Banner" />
+                    <img class="w-80" src="images/trendhireLogo.png" alt="Banner" />
                 </div>
             </div>
         </div>
 
-
-
-        <div class="container-fluid" style="margin-top: 30px">
-            <div class="row">
-                <div class="col d-flex flex-column align-items-center justify-content-center">
-                    <h1><i>"Elevate Your Career with TrendHire!</i> </h1>
-                    <h2 class="text-red"><i>Where Trends Lead to Success"</i> </h2>
-                    <a href="userRegisterForm.jsp" style="margin-top: 15px"> <button type="button" class="btn btn-danger">Sign Up Now</button> </a>
-                </div>
-            </div>
-        </div>
-
-
-
-        <section class="ourJob" style="margin-top: 50px; margin-bottom: 0px">
-            <div class="container-fluid">
-
+        <section class="loginForm">
+            <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="ourjobInner mb-4">
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            <h3 class="text-red">Post Job Vacancies</h3>
-                            <p>Empower your hiring process.<br> Companies, showcase job opportunities on TrendHire and <br>connect with exceptional talent effortlessly.<br> Elevate your team today!</p>
-                            <a href="postvacancy.jsp" class="btn btn-danger read rounded-pill"> Visit <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <div class="col-sm-6 mx-auto">	
+                        <form action="./backend/companyLoginProcess.jsp" method="post">
+                            <h3 class="text-center">LOGIN AS COMPANY</h3>
+                            <a href="seekerLogin.jsp"  <P style="color: red">Login as Job Seeker?</P> </a>
+                            <div class="latestForm">
+                                <!-- user input -->
+                                <div class="form-group"> 
+                                    <input type="text" name="username" id="userName" class="form-control" value="" required> 
+                                    <label class="form-control-placeholder" for="userName">Username</label>
+                                    <i class="fa fa-user iconSet" aria-hidden="true"></i>
+                                </div>
+                                <!-- password input -->
+                                <div class="form-group"> 
+                                    <input type="password" name="password" id="password" class="form-control" value="" required> 
+                                    <label class="form-control-placeholder" for="password">Password</label> 
+                                    <i class="fa fa-lock iconSet" aria-hidden="true"></i>
+                                </div> 
+                            </div> 
+                            <!-- /. latestForm -->
+                            <!-- 2 column grid layout for inline styling -->
+                            <div class="row my-4">
+                                <div class="col d-flex justify-content-left">
+                                    <a class="forgotPwd" href="forgot-password.html">Forgot password?</a>
+                                </div>
+
+
+                            </div>
+
+                            <!-- Submit button -->
+                            <div class="d-grid">
+                                <input type="submit" name="submit" class="btn btn-danger" id="login" value="LOGIN">
+                            </div>
+
+                        </form>	
+
+                        <%
+                            String requestMethod = request.getMethod();
+
+                            if ("GET".equals(requestMethod)) {
+                                String error = request.getParameter("error");
+                                String success = request.getParameter("success");
+                                if (error != null && error.equals("1")) {  %>
+                        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            Your Email or Password Incorrect!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="ourjobInner mb-4">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            <h3 class="text-red">   Look for jobs</h3>
-                            <p>Explore diverse opportunities. <br>Jobseekers, search and discover tailored roles on TrendHire <br>to embark on your desired career journey</p>
-                            <a href="vacancies.jsp" class="btn btn-danger read rounded-pill"> Visit <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <%  }
+                            if (error != null && error.equals("2")) {  %>
+                        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            You need to login to view This Page!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="ourjobInner mb-4">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <h3 class="text-red">Apply for jobs</h3>
-                            <p>Explore diverse job opportunities<br> and apply to vacancies in various industries <br>through TrendHire's user-friendly job application portal.<br> Your dream job awaits.</p>
-                            <a href="vacancies.jsp" class="btn btn-danger read rounded-pill"> Visit <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        <%  }
+                            if(success != null && success.equals("1")) {  %>
+                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            You Have Successfully Registered. Please Log In.
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                         </div>
+                        <%  }
+
+                            }
+                        %>
                     </div>
                 </div>
             </div>
@@ -192,3 +173,6 @@
         </footer>
     </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+crossorigin="anonymous"></script>
