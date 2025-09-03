@@ -32,16 +32,16 @@
                     String cat = request.getParameter("cat");
                     String msg = "Job Not Available";
 
-                    JobDAO dao = new JobDAO(ConnectionFactory.getConnection());
+                    JobDAO dao = new JobDAO(ConnectionFactory.getConn());
 
                     List<Jobs> list = null;
                     if ("lo".equals(loc) && "ca".equals(cat)) {
                         list = new ArrayList<Jobs>();
                         msg = "Job Not Available";
                     } else if ("lo".equals(loc) || "ca".equals(cat)) {
-                        list = dao.getJobsORLocationAndCate(cat, loc);
+                        list = dao.getJobsByCategoryOrLocation(cat, loc);
                     } else {
-                        list = dao.getJobsAndLocationAndCate(cat, loc);
+                        list = dao.getJobsByCategoryAndLocation(cat, loc);
                     }
 
                     if (list == null || list.isEmpty()) {

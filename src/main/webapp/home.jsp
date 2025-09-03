@@ -81,7 +81,7 @@
 
                 <!-- Job Cards -->
                 <%
-                    JobDAO dao = new JobDAO(ConnectionFactory.getConnection());
+                    JobDAO dao = new JobDAO(ConnectionFactory.getConn());
                     List<Jobs> list = dao.getAllJobs();
                     for (Jobs j : list) {
                 %>

@@ -49,11 +49,15 @@ public class RegisterServlet extends HttpServlet {
 
             if (added) {
                 session.setAttribute("succMsg", "Registered Successfully!");
+                resp.sendRedirect("login.jsp");
+                return;
             } else {
                 session.setAttribute("errMsg", "Something went wrong on server!");
+                resp.sendRedirect("signup.jsp");
+                return;
             }
 
-            resp.sendRedirect("signup.jsp");
+            
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -12,7 +12,7 @@ public class ConnectionFactory {
             if (cn == null || cn.isClosed()) {
                 Class.forName("com.mysql.cj.jdbc.Driver"); // Load JDBC driver
                 cn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/job_portal_app", // database name
+                        "jdbc:mysql://localhost:3306/job_portal", // database name
                         "root",                                      // your MySQL username
                         "Khushi@2003"                                // your MySQL password
                 );

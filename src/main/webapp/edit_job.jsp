@@ -32,7 +32,7 @@
                         <i class="fa fa-user-friends fa-3x"></i>
                         <%
                         int id = Integer.parseInt(request.getParameter("id"));
-                        JobDAO dao = new JobDAO(ConnectionFactory.getConnection());
+                        JobDAO dao = new JobDAO(ConnectionFactory.getConn());
                         Jobs j = dao.getJobById(id);
                         %>
 

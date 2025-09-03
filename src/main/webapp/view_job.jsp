@@ -3,7 +3,7 @@
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="master.dto.Jobs"%>
-<%@page import="master.utilities.DBConnect"%>
+<%@page import="master.utilities.ConnectionFactory"%>
 <%@page import="master.dao.JobDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
@@ -34,7 +34,7 @@
                 </c:if>
 
                 <%
-                JobDAO dao = new JobDAO(DBConnect.getconn());
+                JobDAO dao = new JobDAO(ConnectionFactory.getConn());
                 List<Jobs> list = dao.getAllJobs();
                 for (Jobs j : list) {
                 %>

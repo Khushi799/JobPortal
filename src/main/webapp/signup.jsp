@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>SignUp Page</title>
-<%@include file="all_component/all_css.jsp"%>
+<jsp:include page="all_component/all_css.jsp" />
 <style type="text/css">
 
 .back-video{
@@ -19,7 +19,7 @@
 </style>
 </head>
 <body style="background-color: #f0f1f2;">
-	<%@include file="all_component/navbar.jsp"%>
+	<jsp:include page="all_component/navbar.jsp" />
 
 	<div class="container-fluid">
 		<div class="row p-4">

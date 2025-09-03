@@ -3,7 +3,7 @@
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="master.dto.Jobs"%>
-<%@page import="master.utilities.DBConnect"%>
+<%@page import="master.utilities.ConnectionFactory"%>
 <%@page import="master.dao.JobDAO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
@@ -29,7 +29,7 @@
 
                 <%
                 int id = Integer.parseInt(request.getParameter("id"));
-                JobDAO dao = new JobDAO(DBConnect.getconn());
+                JobDAO dao = new JobDAO(ConnectionFactory.getConn());
                 Jobs j = dao.getJobById(id);
                 %>
                 <div class="card mt-5 bg-dark text-white"
