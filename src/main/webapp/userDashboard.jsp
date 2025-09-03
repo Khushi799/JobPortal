@@ -13,7 +13,7 @@
     <br><br>
 
     <form action="searchJobs" method="get">
-        <input type="text" name="keyword" placeholder="Search by title">
+        <input type="text" name="location" placeholder="Search by location">
         <input type="text" name="category" placeholder="Search by category">
         <input type="submit" value="Search Jobs">
     </form>
