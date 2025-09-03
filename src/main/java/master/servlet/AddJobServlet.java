@@ -16,7 +16,8 @@ public class AddJobServlet extends HttpServlet {
         String description = request.getParameter("description");
         String category = request.getParameter("category");
         String location = request.getParameter("location");
-        double salary = Double.parseDouble(request.getParameter("salary"));
+        String salary = request.getParameter("salary");
+
 
         Job job = new Job();
         job.setTitle(title);
