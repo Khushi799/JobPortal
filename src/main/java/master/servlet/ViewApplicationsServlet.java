@@ -1,12 +1,12 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.util.*;
-import com.dao.ApplicationDAO;
-import com.dto.ApplicationDTO;
+import master.dao.ApplicationDAO;
+import master.dto.Application;
 
 @WebServlet("/viewApplications")
 public class ViewApplicationsServlet extends HttpServlet {
@@ -16,7 +16,7 @@ public class ViewApplicationsServlet extends HttpServlet {
         int userId = (Integer) request.getSession().getAttribute("userId");
 
         ApplicationDAO dao = new ApplicationDAO();
-        List<ApplicationDTO> applications = dao.getApplicationsByUser(userId);
+        List<Application> applications = dao.getApplicationsByUser(userId);
 
         request.setAttribute("applications", applications);
         RequestDispatcher rd = request.getRequestDispatcher("viewApplications.jsp");

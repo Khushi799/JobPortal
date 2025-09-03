@@ -1,4 +1,4 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;

@@ -103,4 +103,35 @@ public class ApplicationDAO {
         }
         return null;
     }
+ // 5. Get all applications for a specific user
+    public List<Application> getApplicationsByUser(int userId) {
+        List<Application> list = new ArrayList<>();
+        String sql = "SELECT * FROM applications WHERE user_id=?";
+
+        try (Connection conn = ConnectionFactory.getConn();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Application app = new Application(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getInt("job_id"),
+                        rs.getTimestamp("applied_on"),
+                        rs.getString("status")
+                    );
+                    list.add(app);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
+
 }

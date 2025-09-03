@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,com.dto.ApplicationDTO" %>
+<%@ page import="java.util.*,master.dto.Application" %>
 <html>
 <head>
     <title>My Applications</title>
@@ -7,9 +7,9 @@
     <h2>My Job Applications</h2>
 
     <%
-        List<ApplicationDTO> apps = (List<ApplicationDTO>) request.getAttribute("applications");
+        List<Application> apps = (List<Application>) request.getAttribute("applications");
         if(apps != null && !apps.isEmpty()){
-            for(ApplicationDTO app : apps){
+            for(Application app : apps){
     %>
         <div>
             Job ID: <%= app.getJobId() %> | Status: <%= app.getStatus() %>

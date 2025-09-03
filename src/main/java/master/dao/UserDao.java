@@ -9,7 +9,7 @@ public class UserDao {
     public boolean registerUser(master.dto.User user) {
         try {
             Connection conn = ConnectionFactory.getConn();
-            String sql = "INSERT INTO users(name, email, password, qualification, role) VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO user(name, email, password, qualification, role) VALUES(?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -23,7 +23,7 @@ public class UserDao {
     public User login(String email, String password) {
         try {
             Connection conn = ConnectionFactory.getConn();
-            String sql = "SELECT * FROM users WHERE email=? AND password=?";
+            String sql = "SELECT * FROM user WHERE email=? AND password=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -45,7 +45,7 @@ public class UserDao {
     public boolean updateUser(User user) {
         try {
             Connection conn = ConnectionFactory.getConn();
-            String sql = "UPDATE users SET name=?, qualification=?, email=?, password=? WHERE id=?";
+            String sql = "UPDATE user SET name=?, qualification=?, email=?, password=? WHERE id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getName());
             ps.setString(2, user.getQualification());
@@ -59,7 +59,7 @@ public class UserDao {
     public User getUserById(int id) {
         try {
             Connection conn = ConnectionFactory.getConn();
-            String sql = "SELECT * FROM users WHERE id=?";
+            String sql = "SELECT * FROM user WHERE id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();

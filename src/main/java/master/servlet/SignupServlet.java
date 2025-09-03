@@ -1,12 +1,12 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-import com.dao.UserDAO;
-import com.dto.UserDTO;
+import master.dao.UserDao;
+import master.dto.User;
 
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet {
@@ -19,15 +19,15 @@ public class SignupServlet extends HttpServlet {
         String qualification = request.getParameter("qualification");
         String role = request.getParameter("role");
 
-        UserDTO user = new UserDTO();
+        User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
         user.setQualification(qualification);
         user.setRole(role);
 
-        UserDAO dao = new UserDAO();
-        boolean status = dao.addUser(user);
+        UserDao dao = new UserDao();
+        boolean status = dao.registerUser(user);
 
         if (status) {
             response.sendRedirect("login.jsp");

@@ -1,11 +1,11 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import com.dao.ApplicationDAO;
-import com.dto.ApplicationDTO;
+import master.dao.ApplicationDAO;
+import master.dto.Application;
 
 @WebServlet("/applyJob")
 public class ApplyJobServlet extends HttpServlet {
@@ -15,12 +15,12 @@ public class ApplyJobServlet extends HttpServlet {
         int jobId = Integer.parseInt(request.getParameter("jobId"));
         int userId = (Integer) request.getSession().getAttribute("userId");
 
-        ApplicationDTO app = new ApplicationDTO();
+        Application app = new Application();
         app.setJobId(jobId);
         app.setUserId(userId);
 
         ApplicationDAO dao = new ApplicationDAO();
-        boolean applied = dao.applyJob(app);
+        boolean applied = dao.addApplication(app);
 
         if(applied){
             response.sendRedirect("viewApplications.jsp");

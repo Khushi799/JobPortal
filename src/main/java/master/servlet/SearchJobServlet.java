@@ -1,4 +1,4 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
@@ -6,19 +6,21 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.sql.*;
 import java.util.*;
-import com.dao.JobDAO;
-import com.dto.JobDTO;
+import master.dao.JobDAO;
+import master.dto.Job;
+import master.utilities.ConnectionFactory;
 
 @WebServlet("/searchJobs")
 public class SearchJobServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
 
-        String keyword = request.getParameter("keyword");
+        String location = request.getParameter("location");
         String category = request.getParameter("category");
+        Connection cn = ConnectionFactory.getConn();
 
-        JobDAO jobDAO = new JobDAO();
-        List<JobDTO> jobs = jobDAO.searchJobs(keyword, category);
+        JobDAO jobDAO = new JobDAO(cn);
+        List<Job> jobs = jobDAO.getJobsByCategoryOrLocation(category,location);
 
         request.setAttribute("jobs", jobs);
         RequestDispatcher rd = request.getRequestDispatcher("userDashboard.jsp");

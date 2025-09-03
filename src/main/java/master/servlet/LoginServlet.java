@@ -1,12 +1,12 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-import com.dao.UserDAO;
-import com.dto.UserDTO;
+import master.dao.UserDao;
+import master.dto.User;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -16,8 +16,8 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        UserDAO dao = new UserDAO();
-        UserDTO user = dao.getUserByEmailAndPassword(email, password);
+        UserDao dao = new UserDao();
+        User user = dao.login(email, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
