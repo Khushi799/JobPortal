@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,com.dto.JobDTO" %>
+<%@ page import="java.util.*,master.dto.Job" %>
 <html>
 <head>
     <title>User Dashboard</title>
@@ -20,9 +20,9 @@
 
     <h3>Available Jobs</h3>
     <%
-        List<JobDTO> jobs = (List<JobDTO>) request.getAttribute("jobs");
+        List<Job> jobs = (List<Job>) request.getAttribute("jobs");
         if(jobs != null){
-            for(JobDTO job : jobs){
+            for(Job job : jobs){
     %>
         <div>
             <b><%= job.getTitle() %></b> - <%= job.getCompanyId() %>  

@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.dto.Job" %>
-<%@ page import="com.dto.Application" %>
+<%@ page import="master.dto.Job" %>
+<%@ page import="master.dto.Application" %>
 
 <%
     List<Job> jobs = (List<Job>) request.getAttribute("jobs");
@@ -55,8 +55,8 @@
         %>
         <tr>
             <td><%=app.getId()%></td>
-            <td><%=app.getJobTitle()%></td>
-            <td><%=app.getUserName()%></td>
+            <td><%=app.getJobId()%></td>
+            <td><%=app.getUserId()%></td>
             <td><%=app.getStatus()%></td>
         </tr>
         <%      }
