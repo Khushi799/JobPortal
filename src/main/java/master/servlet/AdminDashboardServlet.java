@@ -2,7 +2,6 @@ package master.servlet;
 
 import java.io.*;
 import java.sql.Connection;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -10,8 +9,8 @@ import java.util.*;
 import master.dao.JobDAO;
 import master.dao.ApplicationDAO;
 import master.dto.Job;
-import master.utilities.ConnectionFactory;
 import master.dto.Application;
+import master.utilities.ConnectionFactory;
 
 @WebServlet("/adminDashboard")
 public class AdminDashboardServlet extends HttpServlet {
@@ -25,27 +24,22 @@ public class AdminDashboardServlet extends HttpServlet {
         }
 
         int adminId = (Integer) session.getAttribute("adminId");
-        //System.out.println("Admin ID in session: " + adminId);
-
-        
-
 
         try (Connection cn = ConnectionFactory.getConn()) {
-            // Fetch jobs posted by this admin
-            
-        	JobDAO jobDAO = new JobDAO(cn);
-        	List<Job> jobs = jobDAO.getCompanyJobs(adminId); // instance call
+            // ✅ Fetch jobs posted by this admin
+            JobDAO jobDAO = new JobDAO(cn);
+            List<Job> jobs = jobDAO.getCompanyJobs(adminId);
 
-        	ApplicationDAO appDAO = new ApplicationDAO();
-        	List<Application> allApplications = new ArrayList<>();
-        	for (Job job : jobs) {
-        	    allApplications.addAll(appDAO.getApplicationsByJob(job.getId())); // now fetches job title dynamically
-        	}
+            // ✅ Fetch all applications (email, qualification, experience, jobTitle only)
+            ApplicationDAO appDAO = new ApplicationDAO();
+            List<Application> applications = appDAO.getAllApplications();
 
-        	request.setAttribute("jobs", jobs);
-        	request.setAttribute("applications", allApplications);
-        	RequestDispatcher rd = request.getRequestDispatcher("adminDashboard.jsp");
-        	rd.forward(request, response);
+            // ✅ Set attributes for JSP
+            request.setAttribute("jobs", jobs);
+            request.setAttribute("applications", applications);
+
+            RequestDispatcher rd = request.getRequestDispatcher("adminDashboard.jsp");
+            rd.forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,5 +47,3 @@ public class AdminDashboardServlet extends HttpServlet {
         }
     }
 }
-
-

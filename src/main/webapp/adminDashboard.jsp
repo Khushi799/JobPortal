@@ -145,27 +145,31 @@
             <%  } %>
         </table>
 
-        <h3>Applications</h3>
-        <table>
-            <tr>
-                <th>ID</th><th>Job ID</th><th>User ID</th><th>Status</th>
-            </tr>
-            <%
-                if (applications != null && !applications.isEmpty()) {
-                    for (Application app : applications) {
-            %>
-            <tr>
-                <td><%= app.getId() %></td>
-                <td><%= app.getJobId() %></td>
-                <td><%= app.getUserId() %></td>
-                <td><%= app.getStatus() %></td>
-            </tr>
-            <%      }
-                } else {
-            %>
-            <tr><td colspan="4">No applications found.</td></tr>
-            <%  } %>
-        </table>
+       <h3>Applications</h3>
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Qualification</th>
+        <th>Experience</th>
+        <th>Job Title</th>
+    </tr>
+    <%
+        if (applications != null && !applications.isEmpty()) {
+            for (Application app : applications) {
+    %>
+    <tr>
+        <td><%= app.getEmail() %></td>
+        <td><%= app.getQualification() %></td>
+        <td><%= app.getExperience() %></td>
+        <td><%= app.getJobTitle() %></td>
+    </tr>
+    <%      }
+        } else {
+    %>
+    <tr><td colspan="4">No applications found.</td></tr>
+    <%  } %>
+</table>
+       
     </div>
 </body>
 </html>

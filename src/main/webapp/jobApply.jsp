@@ -31,15 +31,18 @@
             color: #333;
         }
 
-        textarea {
+        input[type="text"], input[type="email"], input[type="number"], textarea {
             width: 100%;
             border-radius: 6px;
             border: 1px solid #ccc;
             padding: 10px;
             margin-top: 8px;
             margin-bottom: 20px;
-            resize: vertical;
             font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
         }
 
         input[type="submit"] {
@@ -64,8 +67,17 @@
         <form action="${pageContext.request.contextPath}/applyJob" method="post">
             <input type="hidden" name="jobId" value="<%= request.getParameter("jobId") %>">
 
+            <label>Email</label><br>
+            <input type="email" name="email" placeholder="Enter your email" required><br>
+
+            <label>Qualification</label><br>
+            <input type="text" name="qualification" placeholder="Enter your highest qualification" required><br>
+
+            <label>Work Experience (in years)</label><br>
+            <input type="number" name="experience" placeholder="Enter years of experience" min="0" required><br>
+
             <label>Why should we hire you?</label><br>
-            <textarea name="coverLetter" rows="5" placeholder="Write your cover letter here..."></textarea><br>
+            <textarea name="coverLetter" rows="5" placeholder="Write your cover letter here..." ></textarea><br>
 
             <input type="submit" value="Apply">
         </form>
