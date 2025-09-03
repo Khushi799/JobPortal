@@ -1,11 +1,11 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import com.dao.JobDAO;
-import com.dto.Job;
+import master.dao.JobDAO;
+import master.dto.Job;
 
 @WebServlet("/addJob")
 public class AddJobServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class AddJobServlet extends HttpServlet {
         job.setSalary(salary);
 
         JobDAO dao = new JobDAO();
-        dao.addJob(job);
+        dao.addJobs(job);
 
         response.sendRedirect("adminDashboard");
     }

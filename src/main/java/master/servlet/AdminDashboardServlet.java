@@ -1,14 +1,14 @@
-package backend;
+package master.servlet;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.util.*;
-import com.dao.JobDAO;
-import com.dao.ApplicationDAO;
-import com.dto.Job;
-import com.dto.Application;
+import master.dao.JobDAO;
+import master.dao.ApplicationDAO;
+import master.dto.Job;
+import master.dto.Application;
 
 @WebServlet("/adminDashboard")
 public class AdminDashboardServlet extends HttpServlet {
